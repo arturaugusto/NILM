@@ -20,28 +20,28 @@ trainingSpectrum, trainingLabels, testingSpectrum, testingLabels = spectrumData(
 model = train(trainingSpectrum, trainingLabels, combinationCount)
 Train on 20260 samples
 Epoch 1/10
-20260/20260 [==============================] - 2s 81us/sample - loss: 3.7806 - accuracy: 0.2265
+20260/20260 [==============================] - 2s 82us/sample - loss: 3.8875 - accuracy: 0.1956
 Epoch 2/10
-20260/20260 [==============================] - 1s 68us/sample - loss: 1.2869 - accuracy: 0.5773
+20260/20260 [==============================] - 1s 71us/sample - loss: 1.4359 - accuracy: 0.4907
 Epoch 3/10
-20260/20260 [==============================] - 1s 67us/sample - loss: 0.7720 - accuracy: 0.7204
+20260/20260 [==============================] - 1s 69us/sample - loss: 0.9159 - accuracy: 0.6405
 Epoch 4/10
-20260/20260 [==============================] - 1s 67us/sample - loss: 0.5314 - accuracy: 0.8016
+20260/20260 [==============================] - 1s 69us/sample - loss: 0.6348 - accuracy: 0.7596
 Epoch 5/10
-20260/20260 [==============================] - 1s 67us/sample - loss: 0.3751 - accuracy: 0.8736
+20260/20260 [==============================] - 2s 76us/sample - loss: 0.4299 - accuracy: 0.8572
 Epoch 6/10
-20260/20260 [==============================] - 1s 67us/sample - loss: 0.2561 - accuracy: 0.9283
+20260/20260 [==============================] - 1s 66us/sample - loss: 0.2924 - accuracy: 0.9138
 Epoch 7/10
-20260/20260 [==============================] - 1s 67us/sample - loss: 0.1720 - accuracy: 0.9644
+20260/20260 [==============================] - 1s 66us/sample - loss: 0.2084 - accuracy: 0.9432
 Epoch 8/10
-20260/20260 [==============================] - 1s 68us/sample - loss: 0.1191 - accuracy: 0.9801
+20260/20260 [==============================] - 1s 67us/sample - loss: 0.1515 - accuracy: 0.9637
 Epoch 9/10
-20260/20260 [==============================] - 1s 69us/sample - loss: 0.0825 - accuracy: 0.9885
+20260/20260 [==============================] - 1s 67us/sample - loss: 0.1134 - accuracy: 0.9743
 Epoch 10/10
-20260/20260 [==============================] - 1s 68us/sample - loss: 0.0608 - accuracy: 0.9918
-81040/81040 - 3s - loss: 0.0485 - accuracy: 0.9952
+20260/20260 [==============================] - 1s 67us/sample - loss: 0.0902 - accuracy: 0.9813
+81040/81040 - 3s - loss: 0.0794 - accuracy: 0.9835
 
 # evaluate the model
 testLoss, testAcc = model.evaluate(testingSpectrum, testingLabels, verbose=2)
-Test accuracy: 0.9952246
+Test accuracy: 0.98348963
 ```
