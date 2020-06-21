@@ -11,7 +11,8 @@ import itertools
 def sintetize(amplitudeList = [], frequencyList = []):
   samplingFrequency = 100
   samplingInterval = 1 / samplingFrequency
-  beginTime = random.uniform(0, 1)
+  #beginTime = random.uniform(0, 1)
+  beginTime = random.uniform(0, 0)
   endTime = beginTime + 10 
   time = np.arange(beginTime, endTime, samplingInterval)
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+  <div id="app" class="">
+    <section class="section">
+      <div class="container">
+        <h1 class="title">
+          NILM
+        </h1>
+        <p class="subtitle is-size-7">
+          <strong>Nonintrusive load monitoring</strong>
+        </p>
+        
+        <div v-if="!loads.length">Nenhuma carga</div>
+
+        <table class="table is-striped" v-if="loads.length">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="load in loads">
+              <td>{{load.name}}</td>
+              <td>
+                <div class="field">
+                  <div class="control">
+                    <label class="checkbox">
+                      <input type="checkbox" v-model="load.state"> {{load.state ? 'on' : 'off'}}
+                    </label>
+                  </div>
+                </div>
+              </td>
+
+
+            </tr>
+
+          </tbody>
+        </table>
+
+
+        <div class="field" v-if="loads.length">
+          <div class="control">
+            <a class="button">gravar estado</a>
+          </div>
+        </div>
+
+        <hr>
+        
+        <div class="field">
+          <div class="control">
+            <input class="input" type="text" v-model="newName" placeholder="nome">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <a class="button is-small is-link" @click="newLoad">nova carga</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div>
+      <canvas ref="spectrum" width="200" height="40"></canvas>
+    </div>
+
+  </div>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
