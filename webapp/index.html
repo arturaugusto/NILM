@@ -18,61 +18,83 @@
           <strong>Nonintrusive load monitoring</strong>
         </p>
         
-        <div v-if="!loads.length">Nenhuma carga</div>
+        <div class="columns">
+          <div class="column is-narrow">
 
-        <table class="table is-striped" v-if="loads.length">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Situação</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="load in loads">
-              <td>{{load.name}}</td>
-              <td>
-                <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" v-model="load.state"> {{load.state ? 'on' : 'off'}}
-                    </label>
-                  </div>
-                </div>
-              </td>
+            <!-- lista de cargas -->
+            
+            <div v-if="!loads.length">Nenhuma carga</div>
+            <!-- <div v-if="loads.length" class="title is-6">Cargas:</div> -->
+            <table class="table is-striped" v-if="loads.length">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Situação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="load in loads">
+                  <td>{{load.name}}</td>
+                  <td>
+                    <div class="field">
+                      <div class="control">
+                        <label class="checkbox">
+                          <input type="checkbox" v-model="load.isOn"> {{load.isOn ? 'on' : 'off'}}
+                        </label>
+                      </div>
+                    </div>
+                  </td>
 
 
-            </tr>
+                </tr>
 
-          </tbody>
-        </table>
+              </tbody>
+            </table>
 
+            
+          </div>
+          <div class="column">
+            <!-- adiciona cargas -->
+            
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" v-model="newName" placeholder="nome da carga">
+              </div>
+            </div>
 
-        <div class="field" v-if="loads.length">
-          <div class="control">
-            <a class="button">gravar estado</a>
+            <div class="field">
+              <div class="control">
+                <a class="button is-link" @click="newLoad">adicionar carga</a>
+              </div>
+            </div>
+
+            <hr>
+
+            <!-- fotografa estado -->
+
+            <div class="field" v-if="loads.length">
+              <div class="control">
+                <a class="button" @click="saveState">registrar estado</a>
+                <a v-if="savedStates.length > 1" class="button is-primary" @click="train">treinar</a>
+              </div>
+
+              <p>
+                estados para treinamento: {{savedStates.length}}
+              </p>
+            </div>
+
           </div>
         </div>
 
-        <hr>
-        
-        <div class="field">
-          <div class="control">
-            <input class="input" type="text" v-model="newName" placeholder="nome">
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <a class="button is-small is-link" @click="newLoad">nova carga</a>
-          </div>
-        </div>
 
       </div>
     </section>
 
     <div>
-      <canvas ref="spectrum" width="200" height="40"></canvas>
+      <canvas ref="spectrum" width="200" height="60"></canvas>
     </div>
+
+    {{prediction}}
 
   </div>
   <script type="text/javascript" src="app.js"></script>

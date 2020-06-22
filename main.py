@@ -9,11 +9,11 @@ import itertools
 
 
 def sintetize(amplitudeList = [], frequencyList = []):
-  samplingFrequency = 100
+  samplingFrequency = 1000
   samplingInterval = 1 / samplingFrequency
   #beginTime = random.uniform(0, 1)
-  beginTime = random.uniform(0, 0)
-  endTime = beginTime + 10 
+  beginTime = random.uniform(0, 0.0)
+  endTime = beginTime + 0.5
   time = np.arange(beginTime, endTime, samplingInterval)
 
   # sintetize signal
@@ -42,24 +42,26 @@ def plot(time, signal, fourierTransform, frequencies):
   plotter.show()
 
 def combineSpectrum(x, noise):
-  labelStr = ''
+  labelList = list()
   spectrumCombination = np.zeros(len(x[0][1]), dtype=np.complex_)
   for loadName, fourierTransform in x:
-    labelStr += loadName
+    labelList.append(loadName)
     spectrumCombination += fourierTransform
-  spectrumCombination = spectrumCombination/(max(spectrumCombination))
   # add some noise
   spectrumCombination *= np.random.normal(1,noise,len(spectrumCombination))
-  return labelStr, spectrumCombination
+  spectrumCombination = spectrumCombination/max(abs(spectrumCombination))
+  return labelList, spectrumCombination
 
-def buildData(loads, seed=445, noise=0.05, nVariation=10):
+def buildData(loads, seed=445, noise=0.05, nVariation=10, level=1):
+
   # all possible combinations, by pairs, trios, quartets...
   combinations = list()
   combinationCount = 0
   # we must use integers to label the combinations for keras,
   # the `labelMap` maps the integer to the string identifier
   labelMap = dict()
-  for r in range(1, len(loads)):
+  #for r in range(0, len(loads)):
+  for r in range(0, level):
     for x in itertools.combinations(loads, r+1):
       labelInt = combinationCount
       combinationCount += 1
@@ -67,10 +69,10 @@ def buildData(loads, seed=445, noise=0.05, nVariation=10):
       # the `combineSpectrum` function combine the spectrum 
       # and add some noise, so we append multiple samples of the array
       for _i in range(nVariation):
-        labelStr, spectrumCombination = combineSpectrum(x, noise)
+        labelList, spectrumCombination = combineSpectrum(x, noise)
         combinations.append((labelInt, spectrumCombination),)
 
-      labelMap[labelInt] = labelStr      
+      labelMap[labelInt] = labelList
   
   random.seed(seed)
   random.shuffle(combinations)
@@ -131,11 +133,12 @@ def train(trainingSpectrum, trainingLabels, combinationCount):
 
 def main():
   # create N loads with random harmonics and random phase shifts
-  loads = buildLoads(N = 10)
+  loads = buildLoads(N = 3)
   
   # create combinations of resulting loads spectrum * nVariation,
   # multiplied by a noise
   data, labelMap, combinationCount = buildData(loads, noise = 0.05, nVariation = 100)
+  print(labelMap)
 
   # split training and testing data
   # the dataset is shuffled
@@ -148,7 +151,6 @@ def main():
   testLoss, testAcc = model.evaluate(testingSpectrum, testingLabels, verbose=2)
 
   print('\nTest accuracy:', testAcc)
-
 
 if __name__ == '__main__':
   main()
