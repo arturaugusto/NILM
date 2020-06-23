@@ -45,3 +45,7 @@ Epoch 10/10
 testLoss, testAcc = model.evaluate(testingSpectrum, testingLabels, verbose=2)
 Test accuracy: 0.98348963
 ```
+
+# Dashboard
+
+![alt tag](dash.png)
